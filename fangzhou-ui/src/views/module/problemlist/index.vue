@@ -127,13 +127,12 @@
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
-<!--      <Runtime :prunTime="processRunTime" ></Runtime>-->
+      <Runtime ref="Runtime" :prunTime="processRunTime" ></Runtime>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import Runtime from "@/views/system/runtime/index.vue";
 import { listList, getList, delList, addList, updateList } from "@/api/module/problemlist";
 
 export default {
@@ -146,8 +145,6 @@ export default {
   },
   data() {
     return {
-      namedata:'111',
-      processMark:"12",
       processRunTime:{
         processMark:'12',
         id:'',
@@ -186,10 +183,6 @@ export default {
       }
     };
   },
-  components:{
-    Runtime
-  }
-  ,
   created() {
     this.getList();
   },

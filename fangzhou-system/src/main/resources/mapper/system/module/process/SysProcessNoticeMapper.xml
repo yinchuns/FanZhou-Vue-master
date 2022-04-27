@@ -6,22 +6,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="SysProcessNotice" id="SysProcessNoticeResult">
         <result property="processRuntimeId"    column="process_runtime_id"    />
-        <result property="approverId"    column="approver_id"    />
+        <result property="approver"    column="approver"    />
         <result property="approveTime"    column="approve_time"    />
         <result property="approveMsg"    column="approve_msg"    />
         <result property="approveStatus"    column="approve_status"    />
         <result property="nodeName"    column="node_name"    />
     </resultMap>
 
+
     <sql id="selectSysProcessNoticeVo">
-        select process_runtime_id, approver_id, approve_time, approve_msg, approve_status, node_name from sys_process_notice
+        select process_runtime_id, approver, approve_time, approve_msg, approve_status, node_name from sys_process_notice
     </sql>
 
     <select id="selectSysProcessNoticeList" parameterType="SysProcessNotice" resultMap="SysProcessNoticeResult">
         <include refid="selectSysProcessNoticeVo"/>
         <where>  
             <if test="processRuntimeId != null "> and process_runtime_id = #{processRuntimeId}</if>
-            <if test="approverId != null "> and approver_id = #{approverId}</if>
+            <if test="approver != null "> and approver = #{approver}</if>
             <if test="approveTime != null "> and approve_time = #{approveTime}</if>
             <if test="approveMsg != null  and approveMsg != ''"> and approve_msg = #{approveMsg}</if>
             <if test="approveStatus != null "> and approve_status = #{approveStatus}</if>
@@ -39,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into sys_process_notice
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="processRuntimeId != null">process_runtime_id,</if>
-            <if test="approverId != null">approver_id,</if>
+            <if test="approver != null">approver,</if>
             <if test="approveTime != null">approve_time,</if>
             <if test="approveMsg != null">approve_msg,</if>
             <if test="approveStatus != null">approve_status,</if>
@@ -47,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="processRuntimeId != null">#{processRuntimeId},</if>
-            <if test="approverId != null">#{approverId},</if>
+            <if test="approver != null">#{approver},</if>
             <if test="approveTime != null">#{approveTime},</if>
             <if test="approveMsg != null">#{approveMsg},</if>
             <if test="approveStatus != null">#{approveStatus},</if>
@@ -58,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateSysProcessNotice" parameterType="SysProcessNotice">
         update sys_process_notice
         <trim prefix="SET" suffixOverrides=",">
-            <if test="approverId != null">approver_id = #{approverId},</if>
+            <if test="approver != null">approver  = #{approver},</if>
             <if test="approveTime != null">approve_time = #{approveTime},</if>
             <if test="approveMsg != null">approve_msg = #{approveMsg},</if>
             <if test="approveStatus != null">approve_status = #{approveStatus},</if>

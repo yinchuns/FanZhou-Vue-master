@@ -1,6 +1,7 @@
+<div>
 <template>
-  <div>
-  <el-form ref="submitForm" size="small" :inline="true" v-show="showSumb"  label-width="68px">
+  <div>这是一个组件</div>
+<!--  <el-form ref="submitForm" size="small" :inline="true" v-show="showSumb" label-width="68px">
     <el-button type="primary"    plain
                icon="el-icon-plus"  @click="submitForm()">提交</el-button>
   </el-form>
@@ -17,16 +18,12 @@
 
     <el-row :gutter="10" >
       <el-col :span="1.5" v-for="(item,index) of nodeList" >
-        <div style="display: flex;align-items: center;flex-wrap: wrap;">
-          <div :class="item.checkStatus==1?'flowCheckBox':'flowBox'">{{item.nodeName}}</div>
-          <div v-if="index < (nodeList.length-1)" >{{"——>"}}</div>
-
-        </div>
-
+        <view :class="item.checkStatus=1?'flowCheckBox':'flowBox'">{{item.nodeName}}</view>>
+         <view v-if="index > nodeList.length-1" >"————>"</view>>
       </el-col>
     </el-row>
 
-    <el-table v-loading="loadingNodeS" :data="noticeList">
+    <el-table v-loading="loading" :data="noticeList">
       <el-table-column label="节点名称" align="center" prop="nodeName" />
       <el-table-column label="审批时间 " align="center" prop="approveTime" width="180">
         <template slot-scope="scope">
@@ -38,7 +35,7 @@
       <el-table-column label="审批状态 " align="center" prop="approveStatus=1？'通过'：'驳回'"/>
     </el-table>
 
-  <!-- 指派节点审核人 -->
+  &lt;!&ndash; 指派节点审核人 &ndash;&gt;
   <el-dialog :title="title" :visible.sync="openApprover" width="600px" append-to-body>
     <el-table v-loading="approverLoading" :data="approverList" @current-change="clickChange">
       <el-table-column label="选择" width="55">
@@ -52,13 +49,13 @@
     <el-button type="primary"   plain
                icon="el-icon-plus"
                @click="confirmApprover()">选择</el-button>
-  </el-dialog>
-  </div>
+  </el-dialog>-->
 </template>
+</div>
 <style>
 .flowCheckBox{
   border-width: 1px;
-  padding: 20px;
+  padding: 8px;
   border-style: solid;
   border-color: #ECECEC;
   background-color: #F08080;
@@ -67,10 +64,10 @@
 
 .flowBox{
   border-width: 1px;
-  padding: 20px;
+  padding: 8px;
   border-style: solid;
   border-color: #ECECEC;
-  background-color: #696969;
+  background-color: #D8E2EB;
   color:white;
 }
 
@@ -79,26 +76,24 @@
 
 <script>
 
-import { listRuntime, getRuntime, delRuntime, addRuntime, updateRuntime } from "@/api/system/runtime";
-import {getRuntimeByFormId} from "../../../api/system/runtime";
-import {getAproverlist} from "../../../api/system/approver";
+//import { listRuntime, getRuntime, delRuntime, addRuntime, updateRuntime } from "@/api/system/runtime";
+//import {getRuntimeByFormId} from "../../../api/system/runtime";
+//import {getAproverlist} from "../../../api/system/approver";
 
 
 export default {
-  name: "Runtime",
-  props:{
+  name: "assembly",
+/*  props:{
     prunTime:{
       type:Object,
       default:''
     },
     namedata:''
-  },
+  },*/
   data() {
     return {
-      title:'',
       approverLoading: false,
       openApprover:false,
-      loadingNodeS:false,
       //显示提交按钮
       showSumb: false,
       //显示审核页面
@@ -119,122 +114,99 @@ export default {
       approverList: [],
       //选中id
       tableRadio:"",
-      APPROVER_ID:"",
       rules: {
       }
     };
   },
   created() {
-    this.getProcessRunTime();
+    //this.getProcessRunTime();
+
   },
   mounted() {
-    this.getProcessRunTime();
+   /* console.log(this.namedata)*/
+    //console.log(this.prunTime);
   },
   methods: {
     clickChange (item) {
-      this.APPROVER_ID = item.approverId;
+      this.tableRadio = item
     },
     /** 选中审核人*/
-    confirmApprover(){
-      console
-      this.processRunTime.approverId=this.APPROVER_ID;
-          if(this.prunTime.formId){
+    confirmApprover(){/*
+      this.processRunTime.approveId=tableRadio;
+          if(processRunTime.formId!=null){
            //执行流程提交创建动作
-            let params= {
-              processMark: this.processRunTime.processMark,
-              formId:this.processRunTime.formId,
-              approverId:this.APPROVER_ID
-            }
-            addRuntime(params).then(response => {
+            addRuntime(this.processRunTime).then(response => {
               this.$modal.msgSuccess("成功");
               this.open = false;
-              this.getProcessRunTime();
             });
-          }else if(this.prunTime.id){
+          }else if(processRunTime.id!=null){
             //执行流程通过动作
-            let params= {
-              processMark: this.processRunTime.processMark,
-              id:this.processRunTime.id,
-              approverId:this.APPROVER_ID
-            }
-            updateRuntime(params).then(response => {
+            updateRuntime(this.processRunTime).then(response => {
               this.$modal.msgSuccess("成功");
               this.open = false;
-              this.getProcessRunTime();
             });
           }
-          this.openApprover = false;
+          this.openApprover = false;*/
 
     },
     /** 获取审核人列表 */
     getNodeApproverList() {
-      let queryParams= {
-        processMark: this.processRunTime.processMark,
-        currentNode:this.processRunTime.currentNode
-      }
-        getAproverlist(queryParams).then(response => {
-          if(response.rows){
+       /* getAproverlist(this.processRunTime).then(response => {
+          if(response.rows!=null){
             this.approverList = response.rows;
             this.approverLoading=false;
           }
-        });
+        });*/
     },
     /** 查询流程实例列表 */
     getProcessRunTime() {
-      if(this.prunTime.id){
+      /*if(this.prunTime.id!=null){
         getRuntime(this.prunTime.id).then(response => {
-          if(response.data){
-            this.processRunTime = response.data;
-            this.nodeList=this.processRunTime.sysProcessNodeList;
-            this.noticeList=this.processRunTime.sysProcessNoticeList;
-            if(!this.processRunTime.currentNode || this.processRunTime.currentNode==0){
+          if(response.rows!=null){
+            this.processRunTime = response.rows;
+            this.nodeList=this.processRunTime.nodeList;
+            this.noticeList=this.processRunTime.noticeList;
+            if(this.processRunTime.currentNode==null || this.processRunTime.currentNode==1){
               this.showSumb=true;
-              this.showApprove=false;
             }else{
               this.showApprove=true;
-              this.showSumb=false;
             }
-          }else{
-            this.processRunTime =this.prunTime;
           }
         });
-      }else if(this.prunTime.formId){
+      }else if(this.prunTime.formId!=null){
         this.showSumb=true;
-        this.showApprove=false;
-        this.processRunTime =this.prunTime;
-      }
+        /!*getRuntimeByFormId(this.prunTime.formId).then(response => {
+          if(response.rows!=null){
+            this.processRunTime = response.rows;
+            this.nodeList=this.processRunTime.nodeList;
+            this.noticeList=this.processRunTime.noticeList;
+            if(this.processRunTime.currentNode==null || this.processRunTime.currentNode==1){}else{
+              this.showApprove=true;
+            }
+          }
+        });*!/
+      }*/
     },
     /** 提交按钮 */
     submitForm(status) {
-          if (this.prunTime.id) {
+         /* if (this.processRunTime.id != null) {
             this.processRunTime.approveMsg=this.approveMsg;
             if(status==2){//退回
               this.processRunTime.status=status;
               //执行退回动作
-              let params= {
-                processMark: this.processRunTime.processMark,
-                id:this.processRunTime.id,
-                approverId:this.APPROVER_ID,
-                status:status
-              }
-              updateRuntime(params).then(response => {
+              updateRuntime(this.processRunTime).then(response => {
                 this.$modal.msgSuccess("修改成功");
                 this.open = false;
-                this.getProcessRunTime();
+                //this.getProcessRunTime();
               });
             }else{
               //判断是否是最后一个节点
-              if(this.processRunTime.currentNode==this.processRunTime.maxNode){
+              if(this.processRunTime.currentNode===this.processRunTime.maxNode){
                 //执行流程通过动作
-                let params= {
-                  processMark: this.processRunTime.processMark,
-                  id:this.processRunTime.id,
-                  approverId:this.APPROVER_ID
-                }
-                updateRuntime(params).then(response => {
+                updateRuntime(this.processRunTime).then(response => {
                   this.$modal.msgSuccess("修改成功");
                   this.open = false;
-                  this.getProcessRunTime();
+                 // this.getProcessRunTime();
                 });
               }else{
                 //获取审核人弹框，选择审核人
@@ -250,7 +222,7 @@ export default {
             this.approverLoading=true;
             this.title = "选择审核人";
             this.getNodeApproverList();
-          }
+          }*/
     }
   }
 };

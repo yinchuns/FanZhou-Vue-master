@@ -58,7 +58,11 @@ public class SysProcessNodeApproverController extends BaseController
         //获取下一个节点信息
         SysProcessNode node=new SysProcessNode();
         node.setProcessMark(sysProcessRuntime.getProcessMark());
-        Integer nextNode=sysProcessRuntime.getCurrentNode()+1;
+        Integer nextNode=0;
+        if(sysProcessRuntime.getCurrentNode()!=null){
+            nextNode=sysProcessRuntime.getCurrentNode();
+        }
+        nextNode++;
         node.setStep(nextNode);
         node=sysProcessNodeService.selectNodeByProcessMarkAndStep(node);
 

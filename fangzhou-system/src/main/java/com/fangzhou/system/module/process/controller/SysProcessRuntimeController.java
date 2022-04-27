@@ -216,16 +216,16 @@ public class SysProcessRuntimeController extends BaseController
             //获取发起人信息
             SysUser u=sysUserService.selectUserByUserName(pr.getCreateBy());
             sysProcessRuntime.setApproverId(u.getUserId());
-        }
+        }else
 
         //判断当前流程是否是退回后再提交（表单被退回后发起人修改完成了再提交）
         if(pr.getStatus().equals(2)){
             sysProcessRuntime.setCurrentNode(pr.getPreviousNode());
             sysProcessRuntime.setApproverId(pr.getPreviousApproverId());
-        }
+        }else
 
         //既不是退回，也不是退回后再提交，判断当前节点是否已结束
-        if(!sysProcessRuntime.getStatus().equals(2) && !pr.getStatus().equals(2)){
+       {
             Integer nextNode=pr.getCurrentNode()+1;
             //获取当前流程最大节点
             Integer maxNode=sysProcessNodeService.selectMaxNode(pr.getProcessMark());

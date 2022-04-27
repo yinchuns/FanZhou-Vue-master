@@ -38,6 +38,8 @@ import VueMeta from 'vue-meta'
 // 字典数据组件
 import DictData from '@/components/DictData'
 
+import Runtime from "@/views/system/runtime/index.vue";
+
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
 Vue.prototype.getConfigKey = getConfigKey
@@ -50,6 +52,7 @@ Vue.prototype.download = download
 Vue.prototype.handleTree = handleTree
 
 // 全局组件挂载
+Vue.component('Runtime', Runtime)
 Vue.component('DictTag', DictTag)
 Vue.component('Pagination', Pagination)
 Vue.component('RightToolbar', RightToolbar)
