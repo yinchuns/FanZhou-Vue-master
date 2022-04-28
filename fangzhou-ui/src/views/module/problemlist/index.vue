@@ -123,10 +123,11 @@
           <editor v-model="form.problemDetail" :min-height="192"/>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+      <div>
+        <el-button type="primary" @click="submitForm">保 存</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div><br>
+      <hr><br>
       <Runtime ref="Runtime" :prunTime="processRunTime"></Runtime>
     </el-dialog>
   </div>
@@ -236,10 +237,11 @@ export default {
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
-    handleAdd() {
+    async handleAdd() {
       this.reset();
       this.open = true;
       this.title = "添加问题清单";
+      await this.$refs.Runtime.reset();
     },
     /** 修改按钮操作 */
     async handleUpdate(row) {
@@ -268,7 +270,7 @@ export default {
           if (this.form.id != null) {
             updateList(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
-              this.open = false;
+              //this.open = false;
               this.getList();
             });
           } else {

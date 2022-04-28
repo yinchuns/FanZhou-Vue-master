@@ -13,7 +13,7 @@
                  icon="el-icon-plus"  @click="submitForm(1)">通过</el-button>
       <el-button type="primary"    plain
                  icon="el-icon-plus"  @click="submitForm(2)">退回</el-button>
-    </el-form>
+    </el-form><br>
 
     <el-row :gutter="10" >
       <el-col :span="1.5" v-for="(item,index) of nodeList" >
