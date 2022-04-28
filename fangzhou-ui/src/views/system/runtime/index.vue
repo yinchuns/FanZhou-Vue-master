@@ -7,8 +7,8 @@
 
     <el-form ref="submitFormA" size="small" :inline="true" v-show="showApprove" label-width="68px">
       <el-form-item label="审批意见" prop="approveMsg">
-        <el-input   v-model="approveMsg" placeholder="请输入审批意见"   style="width:50%;margin-left: 28px"/>
-      </el-form-item>
+        <el-input   v-model="approveMsg" type="textarea"  :autosize="{minRows: 4, maxRows: 4}" :style="{width: '200%'}" placeholder="请输入审批意见"/>
+      </el-form-item><br>
       <el-button type="primary"    plain
                  icon="el-icon-plus"  @click="submitForm(1)">通过</el-button>
       <el-button type="primary"    plain
@@ -132,8 +132,8 @@ export default {
     await this.getProcessRunTime();
   },
   mounted() {
-    this.reset();
-    this.getProcessRunTime();
+    /*this.reset();
+    this.getProcessRunTime();*/
   },
   watch:{
     prunTime:function (){
@@ -211,7 +211,6 @@ export default {
     },
     /** 查询流程实例列表 */
     getProcessRunTime() {
-       this.reset();
       if(this.prunTime.id){
         getRuntime(this.prunTime.id).then(response => {
           if(response.data){
