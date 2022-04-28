@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fangzhou.common.core.domain.entity.SysUser;
+import com.fangzhou.common.utils.StringUtils;
 import com.fangzhou.system.module.process.domain.SysProcess;
 import com.fangzhou.system.module.process.domain.SysProcessNode;
 import com.fangzhou.system.module.process.domain.SysProcessNotice;
@@ -222,6 +223,7 @@ public class SysProcessRuntimeController extends BaseController
         if(pr.getStatus().equals(2)){
             sysProcessRuntime.setCurrentNode(pr.getPreviousNode());
             sysProcessRuntime.setApproverId(pr.getPreviousApproverId());
+            sysProcessRuntime.setStatus(1);
         }else
 
         //既不是退回，也不是退回后再提交，判断当前节点是否已结束
@@ -258,7 +260,11 @@ public class SysProcessRuntimeController extends BaseController
         if(sysProcessRuntime.getStatus()!=null && sysProcessRuntime.getStatus().equals(2)){
             notice.setApproveStatus(2);
         }else{
-            notice.setApproveStatus(1);
+            if(pr.getStatus().equals(2)){
+                notice.setApproveStatus(3);
+            }else{
+                notice.setApproveStatus(1);
+            }
         }
         //写入审批人
         SysUser u=sysUserService.selectUserById(pr.getApproverId());
@@ -275,7 +281,12 @@ public class SysProcessRuntimeController extends BaseController
         node.setProcessMark(pr.getProcessMark());
         node.setStep(pr.getCurrentNode());
         String nodeName=sysProcessNodeService.selectNodeName(node);
-        notice.setNodeName(nodeName);
+        if(StringUtils.isNotEmpty(nodeName)){
+            notice.setNodeName(nodeName);
+        }else{
+            notice.setNodeName("发起人");
+        }
+
         sysProcessNoticeService.insertSysProcessNotice(notice);
     }
 

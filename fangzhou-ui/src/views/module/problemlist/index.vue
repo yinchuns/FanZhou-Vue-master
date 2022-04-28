@@ -111,7 +111,7 @@
     />
 
     <!-- 添加或修改问题清单对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
+    <el-dialog  :destroy-on-close="true" :title="title" :visible.sync="open" width="800px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="问题编号" prop="problemNum">
           <el-input v-model="form.problemNum" placeholder="请输入问题编号" />
@@ -127,7 +127,7 @@
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
-      <Runtime ref="Runtime" :prunTime="processRunTime" ></Runtime>
+      <Runtime ref="Runtime" :prunTime="processRunTime"></Runtime>
     </el-dialog>
   </div>
 </template>
@@ -137,14 +137,17 @@ import { listList, getList, delList, addList, updateList } from "@/api/module/pr
 
 export default {
   name: "List",
-  props:{
-    prunTime:{
-      type:String,
-      default:''
-    }
-  },
   data() {
     return {
+      //节点数据树
+      nodeList:[],
+      //流程日志列表
+      noticeList: [],
+      // 流程实例对象
+      //审核意见
+      approveMsg:"",
+      //审核人列表
+      approverList: [],
       processRunTime:{
         processMark:'12',
         id:'',
@@ -239,19 +242,24 @@ export default {
       this.title = "添加问题清单";
     },
     /** 修改按钮操作 */
-    handleUpdate(row) {
+    async handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
-      getList(id).then(response => {
-        if(response.data.processRuntimeId!=null){
-          this.processRunTime.id=response.data.processRuntimeId;
-        }else{
-          this.processRunTime.formId=id;
+      await getList(id).then(response => {
+        if (response.data.processRuntimeId != null) {
+          this.processRunTime.formId = "";
+          this.processRunTime.id = response.data.processRuntimeId;
+        } else {
+          this.processRunTime.id ="";
+          this.processRunTime.formId = id;
         }
         this.form = response.data;
         this.open = true;
         this.title = "修改问题清单";
       });
+      await this.$refs.Runtime.reset();
+      await this.$refs.Runtime.getProcessRunTime();
+      console.log(this.processRunTime);
     },
     /** 提交按钮 */
     submitForm() {
