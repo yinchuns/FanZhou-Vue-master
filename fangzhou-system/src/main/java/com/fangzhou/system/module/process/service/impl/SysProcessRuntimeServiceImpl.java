@@ -20,6 +20,11 @@ public class SysProcessRuntimeServiceImpl implements ISysProcessRuntimeService
     @Autowired
     private SysProcessRuntimeMapper sysProcessRuntimeMapper;
 
+    @Override
+    public List<SysProcessRuntime> selectRuntimeListByApprover(SysProcessRuntime sysProcessRuntime) {
+        return sysProcessRuntimeMapper.selectRuntimeListByApprover(sysProcessRuntime);
+    }
+
     /**
      * 根据formId查询流程实例
      *

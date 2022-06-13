@@ -55,6 +55,19 @@ public class SysProcessRuntimeController extends BaseController
      * 查询流程实例列表
      */
     @PreAuthorize("@ss.hasPermi('system:runtime:list')")
+    @GetMapping("/getRuntimeListByApprover")
+    public TableDataInfo getRuntimeListByApprover(SysProcessRuntime sysProcessRuntime)
+    {
+        sysProcessRuntime.setApproverId(getUserId());
+        startPage();
+        List<SysProcessRuntime> list = sysProcessRuntimeService.selectRuntimeListByApprover(sysProcessRuntime);
+        return getDataTable(list);
+    }
+
+    /**
+     * 查询流程实例列表
+     */
+    @PreAuthorize("@ss.hasPermi('system:runtime:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysProcessRuntime sysProcessRuntime)
     {

@@ -1,5 +1,14 @@
 import request from '@/utils/request'
 
+// 根据审核人获取对应流程实例列表
+export function listRuntimeByApprover(query) {
+  return request({
+    url: '/system/process/processRuntime/getRuntimeListByApprover',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询流程实例列表
 export function listRuntime(query) {
   return request({
@@ -8,6 +17,7 @@ export function listRuntime(query) {
     params: query
   })
 }
+
 
 // 查询流程实例详细
 export function getRuntime(id) {

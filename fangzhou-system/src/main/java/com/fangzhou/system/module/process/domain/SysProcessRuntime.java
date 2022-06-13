@@ -17,6 +17,9 @@ public class  SysProcessRuntime extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
+    /**表单详情*/
+    private String formDetail;
+
     /** 流程记录日志对象 */
     private SysProcessNotice sysProcessNotice;
 
@@ -182,6 +185,7 @@ public class  SysProcessRuntime extends BaseEntity
             .append("sysProcessNodeList", getSysProcessNodeList())
             .append("maxNode", getMaxNode())
             .append("approveMsg", getApproveMsg())
+            .append("formDetail", getFormDetail())
             .toString();
     }
 
@@ -224,5 +228,13 @@ public class  SysProcessRuntime extends BaseEntity
 
     public void setApproveMsg(String approveMsg) {
         this.approveMsg = approveMsg;
+    }
+
+    public String getFormDetail() {
+        return formDetail;
+    }
+
+    public void setFormDetail(String formDetail) {
+        this.formDetail = formDetail;
     }
 }

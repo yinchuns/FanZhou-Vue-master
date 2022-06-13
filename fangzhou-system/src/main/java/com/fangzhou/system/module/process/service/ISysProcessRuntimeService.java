@@ -12,6 +12,13 @@ import com.fangzhou.system.module.process.domain.SysProcessRuntime;
 public interface ISysProcessRuntimeService 
 {
     /**
+     * 根据审核人approverId获取流程记录
+     * @param sysProcessRuntime 流程实例
+     * @return 流程实例集合
+     */
+    public List<SysProcessRuntime>  selectRuntimeListByApprover(SysProcessRuntime sysProcessRuntime);
+
+    /**
      * 根据formId查询流程实例
      *
      * @param formId 表单id

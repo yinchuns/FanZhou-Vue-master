@@ -112,6 +112,7 @@
 
     <!-- 添加或修改问题清单对话框 -->
     <el-dialog  :destroy-on-close="true" :title="title" :visible.sync="open" width="800px" append-to-body>
+      <div id="FORM_DITAIl">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="问题编号" prop="problemNum">
           <el-input v-model="form.problemNum" placeholder="请输入问题编号" />
@@ -123,6 +124,7 @@
           <editor v-model="form.problemDetail" :min-height="192"/>
         </el-form-item>
       </el-form>
+      </div>
       <div>
         <el-button type="primary" @click="submitForm">保 存</el-button>
         <el-button @click="cancel">取 消</el-button>

@@ -65,7 +65,7 @@
   padding: 20px;
   border-style: solid;
   border-color: #ECECEC;
-  background-color: #F08080;
+  background-color: #006241;
   color:white;
 }
 
@@ -74,7 +74,7 @@
   padding: 20px;
   border-style: solid;
   border-color: #ECECEC;
-  background-color: #696969;
+  background-color: #00AE72;
   color:white;
 }
 
@@ -86,8 +86,8 @@
 import { listRuntime, getRuntime, delRuntime, addRuntime, updateRuntime } from "@/api/system/runtime";
 import {getRuntimeByFormId} from "../../../api/system/runtime";
 import {getAproverlist} from "../../../api/system/approver";
-
-
+import html2canvas from 'html2canvas';
+let Base64 = require("js-base64").Base64;
 export default {
   name: "Runtime",
   props:{
@@ -159,12 +159,28 @@ export default {
             formId:"",
             processMark:""
         };
+      //显示提交按钮
+      this.showSumb=false;
+      //显示审核页面
+      this.showApprove=false;
     },
     clickChange (item) {
       this.APPROVER_ID = item.approverId;
     },
     /** 选中审核人*/
-    confirmApprover(){
+    async  confirmApprover(){
+     // var  item=document.getElementById("FORM_DITAIl");//获取div标签
+     /* let dataURL ="";
+      // 传入你要生成图片的容器 dom
+
+      await    html2canvas(item).then(canvas => {
+        console.log(item);
+        // dataURL  生成的图片链接 这里是base64格式的
+        dataURL = canvas.toDataURL("image/png");
+      });
+      console.log("---------------dataURL--------------------");
+      await  console.log("aaa:"+dataURL);
+      return;*/
       this.processRunTime.approverId=this.APPROVER_ID;
           if(this.prunTime.formId){
            //执行流程提交创建动作
